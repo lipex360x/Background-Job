@@ -1,7 +1,24 @@
-export default class CreateUserService {
-  async execute (): Promise<string> {
-    console.log('Hello Create User')
+import { inject, injectable } from 'tsyringe'
 
-    return 'Hello CreateUser Service'
+// import AppError from '@shared/errors/AppError'
+
+import User from '@modules/users/entities/User'
+import IUsersRepository from '@modules/users/repositories/interfaces/IUsersRepository'
+
+interface Request{
+  name: string
+  email: string
+}
+
+@injectable()
+export default class CreateUserService {
+  constructor (
+    @inject('UsersRepository')
+    private repository: IUsersRepository
+  ) {}
+
+  async execute ({ name, email }: Request): Promise<void> {
+    // const repoFunctions = await this.repository.function()
+
   }
 }

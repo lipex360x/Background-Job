@@ -11,7 +11,26 @@ describe('CreateUserService', () => {
     createUserService = new CreateUserService(fakeRepository)
   })
 
-  it('should ...', async () => {
-    await expect(1 + 1).toBe(2)
+  it('should able to create a new user', async () => {
+    const user = await createUserService.execute({
+      name: 'John Doe',
+      email: 'john@mail.com'
+    })
+
+    expect(user).toHaveProperty('id')
+  })
+
+  it('should not be able to create a user with duplicated email', async () => {
+    await createUserService.execute({
+      name: 'John Doe',
+      email: 'john@mail.com'
+    })
+
+    await expect(
+      createUserService.execute({
+        name: 'John Tre',
+        email: 'john@mail.com'
+      })
+    ).rejects.toBeInstanceOf(AppError)
   })
 })

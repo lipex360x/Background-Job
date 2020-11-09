@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid'
 
 import User from '@modules/users/entities/User'
-import IUsersRepository, { CreateProps } from '../interfaces/IUsersRepository'
+import IUsersRepository, { CreateProps, FindByEmailProps } from '../interfaces/IUsersRepository'
 
 export default class FakeUsersRepository implements IUsersRepository {
   private repository: User[] = []
@@ -20,5 +20,11 @@ export default class FakeUsersRepository implements IUsersRepository {
     this.repository.push(user)
 
     return user
+  }
+
+  async findByEmail ({ email }:FindByEmailProps): Promise<User> {
+    const getUser = this.repository.find(user => user.email === email)
+
+    return getUser
   }
 }

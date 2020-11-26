@@ -26,7 +26,7 @@ export default class User {
   updated_at: Date;
 
   @BeforeInsert()
-  userProps () {
+  userProps (): void {
     this.id = uuid()
   }
 }
